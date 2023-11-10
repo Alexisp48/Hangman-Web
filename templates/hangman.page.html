@@ -11,6 +11,10 @@
         Try a letter : <input type="text" name="letter" value="" /><br/>
         <input type="submit" value="Submit"/>
     </form>
+    <span>Mot à trouver : {{ .G.WordToFind }}</span>
+    <span>Mot acctuelle : {{ .G.WordFind }}</span>
+    <span>Lettres déjà essayer : {{ .G.LetterTested }}</span>
+    <span>Nombre d'essais : {{ .G.TryNumber }}</span>
     <p>/////</p>
     <p>{{ .Test }}</p>
     <p>/////</p>

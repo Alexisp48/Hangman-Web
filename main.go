@@ -1,8 +1,10 @@
 package main
 
 import (
+	"math/rand"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 const (
@@ -10,7 +12,14 @@ const (
 )
 
 func main() {
-    p := Player{"WORLD"}
+
+    rand.Seed(time.Now().UnixNano())
+
+    p := Player{"PAS ENCORE WIN T NUL", &Game{}}
+
+    fs := http.FileServer(http.Dir("templates"))
+	http.Handle("/templates/", http.StripPrefix("/templates/", fs))
+
     http.HandleFunc("/", p.Home)
     http.HandleFunc("/hangman", p.Hangman)
 
