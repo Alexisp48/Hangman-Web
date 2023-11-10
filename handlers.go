@@ -71,9 +71,8 @@ func (P *Player) Hangman(w http.ResponseWriter, r *http.Request) {
             P.G.WordFind = append(P.G.WordFind, "_")
         }
         P.renderTemplates(w, "hangman")
-    }
-    letter := r.FormValue("letter")
-    if letter != "" {
+    } else {
+        letter := r.FormValue("letter")
         if len(letter) == 1{ // test une lettre
             var letterInWorld = false
             for i := 0; i < len(P.G.WordToFind); i++ {
@@ -83,13 +82,13 @@ func (P *Player) Hangman(w http.ResponseWriter, r *http.Request) {
                 }
             }
             if !letterInWorld {
-                P.G.TryNumber++
+                P.G.TryNumber--
             }
             P.G.LetterTested = append(P.G.LetterTested, letter)
         }else if letter == P.G.WordInString { // test un mot et c'est le bon
             P.G.Win = true // win
         } else { // test pas bon lettre ou mot
-            P.G.TryNumber++
+            P.G.TryNumber--
         }
         if testEq(P.G.WordFind, P.G.WordToFind) {
             P.G.Win = true

@@ -15,7 +15,7 @@ func main() {
 
     rand.Seed(time.Now().UnixNano())
 
-    p := Player{"PAS ENCORE WIN T NUL", &Game{}}
+    p := Player{"PAS ENCORE WIN T NUL", &Game{TryNumber: 10}}
 
     fs := http.FileServer(http.Dir("templates"))
 	http.Handle("/templates/", http.StripPrefix("/templates/", fs))
