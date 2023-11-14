@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,34 +10,26 @@ import (
 )
 
 type Player struct {
-    Test string
+    Name string
     G *Game
 }
 
 type Game struct {
-    WordInString string
-    WordToFind []string
-    WordFind []string
-    LetterTested []string
-    Win bool
+    World string
+    WorldFind string
+    LetterTested string
+    Win string
     TryNumber int
 }
 
 func (P *Player) Home(w http.ResponseWriter, r *http.Request) {
     P.renderTemplates(w, "home")
-    fmt.Fprintf(w, "Hello")
 }
 
-func testEq(a, b []string) bool {
-    if len(a) != len(b) {
-        return false
-    }
-    for i := range a {
-        if a[i] != b[i] {
-            return false
-        }
-    }
-    return true
+func replaceAtIndex(in *string, r rune, i int) {
+    out := []rune(*in)
+    out[i] = rune(r)
+    *in = string(out)
 }
 
 func openFile(file string) []string {
@@ -61,42 +52,60 @@ func openFile(file string) []string {
     return fileLines
 }
 
+func (P *Player) reset() {
+    P.G.LetterTested = ""
+    P.G.World = ""
+    P.G.TryNumber = 10
+    P.G.Win = "inGame"
+    P.G.WorldFind = ""
+}
+
 func (P *Player) Hangman(w http.ResponseWriter, r *http.Request) {
-    if len(P.G.WordToFind) == 0 { // initialse le mot
-        P.G.WordInString = openFile("worldDataBase.txt")[rand.Intn(len(openFile("worldDataBase.txt")))]
-        for i := 0; i < len(P.G.WordInString); i++ {
-            P.G.WordToFind = append(P.G.WordToFind, string(P.G.WordInString[i]))
-        }
-        for i := 0; i < len(P.G.WordToFind); i++ {
-            P.G.WordFind = append(P.G.WordFind, "_")
+    if P.G.Win != "inGame" {
+        P.reset()
+    }
+    if len(P.G.World) == 0 { // initialse le mot
+        P.G.World = openFile("worldDataBase.txt")[rand.Intn(len(openFile("worldDataBase.txt")))]
+        for i := 0; i < len(P.G.World); i++ {
+            P.G.WorldFind += "_"
         }
         P.renderTemplates(w, "hangman")
     } else {
         letter := r.FormValue("letter")
-        if len(letter) == 1{ // test une lettre
-            var letterInWorld = false
-            for i := 0; i < len(P.G.WordToFind); i++ {
-                if P.G.WordToFind[i] == letter {
-                    letterInWorld = true
-                    P.G.WordFind[i] = letter
+        if letter != "" {
+            if len(letter) == 1{ // test une lettre
+                var turn = true
+                for i := 0; i < len(P.G.LetterTested)/3; i++ {
+                    if []rune(letter)[0] == rune(P.G.LetterTested[i*3]) {
+                        turn = false
+                    }
                 }
-            }
-            if !letterInWorld {
+                if turn {
+                    var letterInWorld = false
+                    for i := 0; i < len(P.G.World); i++ {
+                        if rune(P.G.World[i]) == []rune(letter)[0] {
+                            letterInWorld = true
+                            replaceAtIndex(&P.G.WorldFind, []rune(letter)[0], i)
+                        }
+                    }
+                    if !letterInWorld {
+                        P.G.TryNumber--
+                    }
+                    P.G.LetterTested += letter + "  "
+                }
+            }else if letter == P.G.World { // test un mot et c'est le bon
+                P.G.Win = "win" // win
+            } else { // test pas bon lettre ou mot
                 P.G.TryNumber--
             }
-            P.G.LetterTested = append(P.G.LetterTested, letter)
-        }else if letter == P.G.WordInString { // test un mot et c'est le bon
-            P.G.Win = true // win
-        } else { // test pas bon lettre ou mot
-            P.G.TryNumber--
+            if P.G.WorldFind == P.G.World {
+                P.G.Win = "win"
+            }
+            if P.G.TryNumber <= 0 {
+                P.G.Win = "lose"
+            }
+            P.renderTemplates(w, "hangman")
         }
-        if testEq(P.G.WordFind, P.G.WordToFind) {
-            P.G.Win = true
-        }
-        if P.G.Win {
-            P.Test = "WINNNNN GG"
-        }
-        P.renderTemplates(w, "hangman")
     }
 }
 

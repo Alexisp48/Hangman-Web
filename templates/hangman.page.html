@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
+    <link rel="stylesheet" href="templates/style.css" type="text/css">
 </head>
 <body>
-    <h1 style="font-size: 30px;"><center>Hangman</center></h1>
-    <form action="/hangman" method="post">
-        Try a letter : <input type="text" name="letter" value="" /><br/>
-        <input type="submit" value="Submit"/>
-    </form>
-    <span>Mot à trouver : {{ .G.WordToFind }}</span>
-    <span>Mot acctuelle : {{ .G.WordFind }}</span>
-    <span>Lettres déjà essayer : {{ .G.LetterTested }}</span>
-    <span>Nombre d'essais : {{ .G.TryNumber }}</span>
-    <p>/////</p>
-    <p>{{ .Test }}</p>
-    <p>/////</p>
-    <img src="templates/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
+    <div>
+        <h1>Hangman</h1>
+    </div>
+    <div class="flex">
+        {{ if eq .G.Win "inGame"}}
+            <div class="column">
+                <form action="/hangman" method="post">
+                    <input type="text" name="letter" value="" placeholder="Try a letter" class="button" />
+                    <input type="submit" class="button" role="button" value="Submit">
+                </form>
+                <p>{{ .G.WorldFind }}</p>
+                <p>{{ .G.LetterTested }}</p>
+                <p>{{ .G.TryNumber }} Try Left</p>
+                <p>Mot à trouver : {{ .G.World }}</p>
+            </div>
+            <div class="flex">
+                <img src="templates/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
+            </div>
+        {{ end }}
+        {{ if eq .G.Win "lose" }}
+            <div>
+                <p> T'es super nul le mot c'était : {{ .G.World }}</p>
+                <form action="/">
+                    <input type="submit" class="button" role="button" value="Home Page" >
+                </form>
+            </div>
+        {{ end }}
+        {{ if eq .G.Win "win" }}
+            <div>
+                <p> Bien joué t'as gagné le mot c'était : {{ .G.World }}</p>
+                <form action="/">
+                    <input type="submit" class="button" role="button" value="Home Page" >
+                </form>
+            </div>
+        {{ end }}
+    </div>
 </body>
 </html>
