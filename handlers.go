@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type Player struct {
@@ -130,6 +131,7 @@ func (P *Player) reset() {
 
 func (P *Player) Hangman(w http.ResponseWriter, r *http.Request) {
 	if !P.Login {
+		
 		return
 	}
 	letter := r.FormValue("letter")
@@ -145,15 +147,13 @@ func (P *Player) Hangman(w http.ResponseWriter, r *http.Request) {
 		P.renderTemplates(w, "hangman")
 	} else {
 		if letter != "" || letterAlphabet != "" {
+			if letterAlphabet != "" {
+				letter = letterAlphabet
+			}
+			letter = strings.ToUpper(letter)
 			if len(letter) == 1 || letterAlphabet != "" { // test une lettre
-				if letterAlphabet != "" {
-					letter = letterAlphabet
-				}
 				var turn = true
 				var index = -1
-				if 97 <= []rune(letter)[0] && []rune(letter)[0] <= 122 {
-					letter = string(rune(int([]rune(letter)[0] - 32)))
-				}
 				if 65 <= []rune(letter)[0] && []rune(letter)[0] <= 90 {
 					index = int([]rune(letter)[0] - 65)
 				} else {
