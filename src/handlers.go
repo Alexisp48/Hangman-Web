@@ -1,63 +1,12 @@
 package HangmanWeb
 
 import (
-	"bufio"
-	"encoding/json"
 	"html/template"
-	"io/ioutil"
-	"log"
 	"math/rand"
 	"net/http"
-	"os"
 	"strings"
 )
 
-type Player struct {
-	Name  string `json:"name"`
-	Pwd   string `json:"pwd"`
-	Pts   int    `json:"pts"`
-	Id    int    `json:"id"`
-	G     *Game
-	Login bool
-}
-
-type Game struct {
-	Word         string
-	WordFind     string
-	LetterTested string
-	LetterColor  []string
-	Win          string
-	TryNumber    int
-}
-
-type Engine struct {
-	P	 	Player
-	Users []Player
-}
-
-func (E *Engine) Load(filePath string) {
-
-	data, _ := ioutil.ReadFile(filePath)
-	err := json.Unmarshal(data, &E.Users)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-}
-
-func (E *Engine) Save(filePath string) {
-
-	E.Users[E.P.Id] = E.P // Update values
-
-	data, err := json.Marshal(E.Users)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	ioutil.WriteFile(filePath, data, 0777)
-}
 
 func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 
@@ -101,26 +50,6 @@ func replaceAtIndex(in *string, r rune, i int) {
 	out := []rune(*in)
 	out[i] = rune(r)
 	*in = string(out)
-}
-
-func openFile(file string) []string {
-	fileLines := []string{}
-	// open file
-	f, err := os.Open(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// remember to close the file at the end of the program
-	defer f.Close()
-
-	// read the file line by line using scanner
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		// do something with a line
-		fileLines = append(fileLines, scanner.Text())
-	}
-	return fileLines
 }
 
 func (P *Player) reset() {
