@@ -8,10 +8,24 @@
 </head>
 <body>
     <h1>Le Site de Fou Avec Les Jeux</h1>
-    <div class="flex">
-        <form action="/hangman">
-            <input type="submit" class="button" role="button" value="Hangman" >
-        </form>
+    <div class="column">
+        {{ if .Login }}
+            <div class="column">
+                <p> Score Bord :</p>
+                <p>Vous avez {{ .Pts }} Points !</p>
+                <p>Vous êtes {{ .Id }} eme !</p>
+            </div>
+            <form action="/hangman">
+                <input type="submit" class="button margin" role="button" value="Hangman" >
+            </form>
+        {{ else }}
+            <p> Login :</p>
+            <form action="/" method="post" class="column">
+                <input type="text" name="name" value="" placeholder="User Name" class="button margin" />
+                <input type="text" name="password" value="" placeholder="Password" class="button margin" minlength="5" />
+                <input type="submit" class="button margin" role="button" value="Submit">
+            </form>
+        {{ end }}
     </div>
 </body>
 </html>

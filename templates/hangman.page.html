@@ -12,33 +12,61 @@
     </div>
     <div class="flex">
         {{ if eq .G.Win "inGame"}}
-            <div class="column">
+            <div class="column right">
                 <form action="/hangman" method="post">
-                    <input type="text" name="letter" value="" placeholder="Try a letter" class="button" />
-                    <input type="submit" class="button" role="button" value="Submit">
+                    <input type="text" name="letter" value="" placeholder="Try a letter" class="button text-zone margin" />
+                    <input type="submit" class="button margin" role="button" value="Submit">
                 </form>
-                <p>{{ .G.WorldFind }}</p>
+                <form action="/hangman" method="post">
+                    <input type="submit" class="button" value="A" name="letterAlphabet" {{ if eq (index .G.LetterColor 0) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 0) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="Z" name="letterAlphabet" {{ if eq (index .G.LetterColor 25) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 25) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="E" name="letterAlphabet" {{ if eq (index .G.LetterColor 4) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 4) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="R" name="letterAlphabet" {{ if eq (index .G.LetterColor 17) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 17) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="T" name="letterAlphabet" {{ if eq (index .G.LetterColor 19) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 19) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="Y" name="letterAlphabet" {{ if eq (index .G.LetterColor 24) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 24) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="U" name="letterAlphabet" {{ if eq (index .G.LetterColor 20) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 20) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="I" name="letterAlphabet" {{ if eq (index .G.LetterColor 8) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 8) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="O" name="letterAlphabet" {{ if eq (index .G.LetterColor 14) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 14) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="P" name="letterAlphabet" {{ if eq (index .G.LetterColor 15) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 15) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}><br>
+                    <input type="submit" class="button" value="Q" name="letterAlphabet" {{ if eq (index .G.LetterColor 16) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 16) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="S" name="letterAlphabet" {{ if eq (index .G.LetterColor 18) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 18) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="D" name="letterAlphabet" {{ if eq (index .G.LetterColor 3) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 3) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="F" name="letterAlphabet" {{ if eq (index .G.LetterColor 5) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 5) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="G" name="letterAlphabet" {{ if eq (index .G.LetterColor 6) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 6) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="H" name="letterAlphabet" {{ if eq (index .G.LetterColor 7) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 7) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="J" name="letterAlphabet" {{ if eq (index .G.LetterColor 9) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 9) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="K" name="letterAlphabet" {{ if eq (index .G.LetterColor 10) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 10) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="L" name="letterAlphabet" {{ if eq (index .G.LetterColor 11) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 11) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="M" name="letterAlphabet" {{ if eq (index .G.LetterColor 12) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 12) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}><br>
+                    <input type="submit" class="button" value="W" name="letterAlphabet" {{ if eq (index .G.LetterColor 22) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 22) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="X" name="letterAlphabet" {{ if eq (index .G.LetterColor 23) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 23) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="C" name="letterAlphabet" {{ if eq (index .G.LetterColor 2) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 2) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="V" name="letterAlphabet" {{ if eq (index .G.LetterColor 21) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 21) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="B" name="letterAlphabet" {{ if eq (index .G.LetterColor 1) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 1) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                    <input type="submit" class="button" value="N" name="letterAlphabet" {{ if eq (index .G.LetterColor 13) "in" }} style="background-color: rgb(93, 247, 156 );" {{ end }} {{ if eq (index .G.LetterColor 13) "out" }} style="background-color:  rgb( 122, 122, 122 );" {{ end }}>
+                </form>
+                <p>{{ .G.WordFind }}</p>
                 <p>{{ .G.LetterTested }}</p>
                 <p>{{ .G.TryNumber }} Try Left</p>
-                <p>Mot à trouver : {{ .G.World }}</p>
+                <p>Mot à trouver : {{ .G.Word }}</p>
             </div>
             <div class="flex">
                 <img src="templates/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
             </div>
         {{ end }}
         {{ if eq .G.Win "lose" }}
-            <div>
-                <p> T'es super nul le mot c'était : {{ .G.World }}</p>
+            <div class="column">
+                <p> T'es super nul le mot c'était : {{ .G.Word }}</p>
                 <form action="/">
-                    <input type="submit" class="button" role="button" value="Home Page" >
+                    <input type="submit" class="button margin" role="button" value="Home Page" >
                 </form>
             </div>
         {{ end }}
         {{ if eq .G.Win "win" }}
-            <div>
-                <p> Bien joué t'as gagné le mot c'était : {{ .G.World }}</p>
+            <div class="column">
+                <p> Bien joué t'as gagné le mot c'était : {{ .G.Word }}</p>
                 <form action="/">
-                    <input type="submit" class="button" role="button" value="Home Page" >
+                    <input type="submit" class="button margin" role="button" value="Home Page" >
                 </form>
             </div>
         {{ end }}

@@ -1,8 +1,11 @@
 package main
 
 import (
-	"math/rand"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"math/rand"
 	"net/http"
 	"time"
 )
@@ -15,7 +18,18 @@ func main() {
 
     rand.Seed(time.Now().UnixNano())
 
-    p := Player{"Moi", &Game{TryNumber: 10, Win: "inGame"}}
+    var unLog []Player
+
+    data, _ := ioutil.ReadFile("Users.json")
+    err := json.Unmarshal(data, &unLog)
+
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    p := unLog[0]
+    Users = unLog
+    p.Login = false
 
     fs := http.FileServer(http.Dir("templates"))
 	http.Handle("/templates/", http.StripPrefix("/templates/", fs))

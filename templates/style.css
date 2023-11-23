@@ -37,8 +37,11 @@ h1 {
   justify-content: center;
 }
 
-.column {
+.right {
   margin-right: 100px;
+}
+
+.column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -47,14 +50,22 @@ h1 {
   justify-content: center;
 }
 
+.text-zone {
+  text-transform: uppercase;
+}
 
-input:focus {
+.text-zone:focus {
   outline: none;
+}
+
+/* ALPHABET */
+
+.margin {
+  margin : 20px;
 }
 
 /* BUTTON */
 .button {
-  margin: 20px;
   align-items: center;
   appearance: none;
   background-color: #FCFCFD;
@@ -87,6 +98,7 @@ input:focus {
 
 .button:focus {
   box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  outline: none;
 }
 
 .button:hover {
@@ -95,7 +107,7 @@ input:focus {
 }
 
 .button:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
+  /*box-shadow: #D6D6E7 0 3px 7px inset;*/
   transform: translateY(2px);
 }
 
