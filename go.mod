@@ -1,3 +1,3 @@
-module contact-form.example.com
+module HangmanWeb
 
 go 1.18

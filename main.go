@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"time"
+    HangmanWeb "HangmanWeb/src"
 )
 
 const (
@@ -18,9 +19,9 @@ func main() {
 
     rand.Seed(time.Now().UnixNano())
 
-    var unLog []Player
+    var unLog []HangmanWeb.Player
 
-    data, _ := ioutil.ReadFile("Users.json")
+    data, _ := ioutil.ReadFile("data/Users.json")
     err := json.Unmarshal(data, &unLog)
 
     if err != nil {
@@ -28,14 +29,18 @@ func main() {
     }
 
     p := unLog[0]
-    Users = unLog
     p.Login = false
 
-    fs := http.FileServer(http.Dir("templates"))
-	http.Handle("/templates/", http.StripPrefix("/templates/", fs))
+    var e HangmanWeb.Engine
 
-    http.HandleFunc("/", p.Home)
-    http.HandleFunc("/hangman", p.Hangman)
+    e.P = p
+    e.Users = unLog
+
+    fs := http.FileServer(http.Dir("serv"))
+	http.Handle("/serv/", http.StripPrefix("/serv/", fs))
+
+    http.HandleFunc("/", e.Home)
+    http.HandleFunc("/hangman", e.Hangman)
 
     fmt.Println("(http://localhost:8080) - Serveur started on port", port)
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
-    <link rel="stylesheet" href="templates/style.css" type="text/css">
+    <link rel="stylesheet" href="serv/css/style.css" type="text/css">
 </head>
 <body>
     <div>
@@ -51,7 +51,7 @@
                 <p>Mot à trouver : {{ .G.Word }}</p>
             </div>
             <div class="flex">
-                <img src="templates/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
+                <img src="serv/assets/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
             </div>
         {{ end }}
         {{ if eq .G.Win "lose" }}

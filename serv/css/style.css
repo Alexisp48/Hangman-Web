@@ -1,10 +1,10 @@
 @font-face {
     font-family: rubik;
-    src: url(Rubik/Rubik-Medium.ttf);
+    src: url(../assets/Rubik/Rubik-Medium.ttf);
 }
 @font-face {
   font-family: rubik-bold;
-  src: url(Rubik/Rubik-Bold.ttf);
+  src: url(../assets/Rubik/Rubik-Bold.ttf);
 }
 
 html {
