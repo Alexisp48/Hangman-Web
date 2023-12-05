@@ -1,22 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" http-equiv="refresh" content="30" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>The 8th Era</title>
     <link rel="stylesheet" href="serv/css/style.css" type="text/css">
 </head>
 <body>
-    <h1>Le Site de Fou Avec Les Jeux</h1>
+    <script>
+        var snd = new Audio("serv/assets/sounds/level_up.mp3");
+    </script>
+    <h1>The 8th Era</h1>
     <div class="column">
         {{ if .Login }}
-            <div class="column">
-                <p> Score Bord :</p>
-                <p>Vous avez {{ .Pts }} Points !</p>
-                <p>Vous êtes {{ .Id }} eme !</p>
-            </div>
+            <!--<audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>-->
+            <style>
+                body {
+                    background-image: url("serv/assets/images/background/background-{{ .R.Age }}.jpg");
+                    background-size: cover;
+                }
+            </style>
             <form action="/hangman">
-                <input type="submit" class="button margin" role="button" value="Hangman" >
+                <input type="submit" class="button margin" role="button" value="🪙 Gold Farm / Make gold 🪙" >
+            </form>
+            <div class="column white">
+                <p> Village : </p>
+                {{ if eq .Id 1 }}
+                    <p>You are 1 st !</p>
+                {{ else }}
+                    <p>You are {{ .Id }} th !</p>
+                {{ end }}
+                <p>You are at the {{ .R.Age }} era</p>
+                <p>You have {{ .Pts }} golds</p>
+                <p>You have {{ .R.Food }} apples</p>
+            </div>
+            {{ if eq .R.Age 8 }}
+                <p class="white">Well played you just reached the 8th era !</p>
+            {{ else }}
+                <form action="/" method="post">
+                    <input onclick="snd.play()" type="submit" class="button margin" role="button" value="⭐ Village upgrade / Cost {{ index .R.AgePrice .R.Age }} gold ⭐" name="upgrade">
+                </form>
+            {{ end }}
+            <form action="/" method="post">
+                <input type="submit" class="button margin" role="button" value="🍎 Buy 30 Apples / Cost 25 gold 🍎 " name="food" >
             </form>
         {{ else }}
             <p> Login :</p>

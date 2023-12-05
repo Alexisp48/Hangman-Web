@@ -14,7 +14,6 @@ html {
 * {
   font-size: 30px;
   font-family: "rubik";
-  background-color: rgba(255,255,255,255);
 }
 
 p {
@@ -56,6 +55,13 @@ h1 {
 
 .text-zone:focus {
   outline: none;
+}
+
+.white {
+  background-color: white;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  border-radius: 20px;
+  padding: 15px;
 }
 
 /* ALPHABET */

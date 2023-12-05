@@ -19,7 +19,7 @@ func (E *Engine) Load(filePath string) {
 
 func (E *Engine) Save(filePath string) {
 
-	E.Users[E.P.Id] = E.P // Update values
+	E.Users[E.P.Id] = E.P // Update values //
 
 	data, err := json.Marshal(E.Users)
 

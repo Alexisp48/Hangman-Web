@@ -3,18 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangman</title>
+    <title>Gold Farm</title>
     <link rel="stylesheet" href="serv/css/style.css" type="text/css">
 </head>
 <body>
+    <audio autoplay="true" src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg"></audio>
+    {{ if or ( or (eq .G.TryNumber 10) (eq .G.TryNumber 9) ) (eq .G.TryNumber 8) }}
+    <style>
+        body {
+            background-color: rgb(93, 247, 156 );
+        }
+    </style>
+    {{ end }}
+    {{ if or ( or (eq .G.TryNumber 7) (eq .G.TryNumber 6) ) (or (eq .G.TryNumber 5) (eq .G.TryNumber 4)) }}
+    <style>
+        body {
+            background-color: #fcc640;
+        }
+    </style>
+    {{ end }}
+    {{ if or ( or (eq .G.TryNumber 3) (eq .G.TryNumber 2) ) (or (eq .G.TryNumber 1) (eq .G.TryNumber 0)) }}
+    <style>
+        body {
+            background-color: #fc5d40;
+        }
+    </style>
+    {{ end }}
     <div>
-        <h1>Hangman</h1>
+        <h1>Gold Farm</h1>
     </div>
     <div class="flex">
         {{ if eq .G.Win "inGame"}}
-            <div class="column right">
+            <div class="column right white">
                 <form action="/hangman" method="post">
-                    <input type="text" name="letter" value="" placeholder="Try a letter" class="button text-zone margin" />
+                    <input type="text" name="letter" value="" placeholder="Try a letter or a word" class="button text-zone margin" />
                     <input type="submit" class="button margin" role="button" value="Submit">
                 </form>
                 <form action="/hangman" method="post">
@@ -51,7 +73,7 @@
                 <p>Mot à trouver : {{ .G.Word }}</p>
             </div>
             <div class="flex">
-                <img src="serv/assets/images/hangman-{{ .G.TryNumber }}.png" alt=""\>
+                <img src="serv/assets/images/hangman/hangman-{{ .G.TryNumber }}.png" alt=""\>
             </div>
         {{ end }}
         {{ if eq .G.Win "lose" }}

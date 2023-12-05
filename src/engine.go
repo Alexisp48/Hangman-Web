@@ -8,12 +8,22 @@ import (
 )
 
 type Player struct {
-	Name  string `json:"name"`
-	Pwd   string `json:"pwd"`
-	Pts   int    `json:"pts"`
-	Id    int    `json:"id"`
-	G     *Game
-	Login bool
+	Name  		string		`json:"name"`
+	Pwd   		string 		`json:"pwd"`
+	Pts   		int    		`json:"pts"`
+	Id    		int    		`json:"id"`
+	WinNumber	int    		`json:"winNumber"`
+	R 			*Resource	`json:"R"`
+	CurrentPage string
+	Timer 		time.Time
+	G     		*Game
+	Login 		bool
+}
+
+type Resource struct {
+	Food		int
+	Age 		int // Avancement de la civilisation
+	AgePrice	[]int
 }
 
 type Game struct {
