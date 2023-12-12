@@ -51,9 +51,11 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 		E.P.G.LetterColor = []string{"none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"}
 
 		E.P.Login = true
+
 		//fmt.Println(P)
 
 		go E.useFood(w)
+
 	} else if E.P.Login && upgrade != "" && E.P.Pts >= E.P.R.AgePrice[E.P.R.Age] {
 		E.P.Pts -= E.P.R.AgePrice[E.P.R.Age]
 		E.P.R.Age += 1
@@ -61,6 +63,8 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 		E.P.Pts -= 25
 		E.P.R.Food += 30
 	}
+
+	E.Save("data/Users.json")
 
 	E.P.renderTemplates(w, "home")
 
@@ -84,8 +88,15 @@ func (P *Player) reset() {
 func (E *Engine) useFood(w http.ResponseWriter) {
 	if time.Since(E.P.Timer).Seconds() >= 30 {
 		E.P.Timer = time.Now()
-		E.P.R.Food -= int(float32(E.P.R.Age/2) * 6)
-		E.Save("data/Users.json")
+		E.P.R.Food -= 6
+		if E.P.R.Food <= 0 {
+			if E.P.R.Age != 1 {
+				E.P.R.Age -= 1
+				E.P.R.Food = 30
+			} else {
+				E.P.R.Food = 0
+			}
+		}
 	}
 	go E.useFood(w)
 }
@@ -146,7 +157,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				}
 			} else if letter == E.P.G.Word { // test un mot et c'est le bon
 				E.P.G.Win = "win" // win
-				E.P.Pts += int(float32(E.P.R.Age/2) * 12)
+				E.P.Pts += 13
 				E.P.R.Food += 5
 				E.Save("data/Users.json")
 			} else { // test pas bon lettre ou mot
@@ -154,7 +165,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 			}
 			if E.P.G.WordFind == E.P.G.Word {
 				E.P.G.Win = "win"
-				E.P.Pts += int(float32(E.P.R.Age/2) * 12)
+				E.P.Pts += 13
 				E.P.R.Food += 5
 				E.Save("data/Users.json")
 			}

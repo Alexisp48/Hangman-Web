@@ -12,7 +12,6 @@ type Player struct {
 	Pwd   		string 		`json:"pwd"`
 	Pts   		int    		`json:"pts"`
 	Id    		int    		`json:"id"`
-	WinNumber	int    		`json:"winNumber"`
 	R 			*Resource	`json:"R"`
 	CurrentPage string
 	Timer 		time.Time
