@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" http-equiv="refresh" content="30" >
+    <meta charset="UTF-8" http-equiv="refresh" content="20" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The 8th Era</title>
     <link rel="stylesheet" href="serv/css/style.css" type="text/css">
@@ -13,7 +13,7 @@
     <h1>The 8th Era</h1>
     <div class="column">
         {{ if .Login }}
-            <!--<audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>-->
+            <audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>
             <style>
                 body {
                     background-image: url("serv/assets/images/background/background-{{ .R.Age }}.jpg");
@@ -30,7 +30,7 @@
                 {{ else }}
                     <p>You are {{ .Id }} th !</p>
                 {{ end }}
-                <p>You are at the {{ .R.Age }} era</p>
+                <p>You are at the era {{ .R.Age }}</p>
                 <p>You have {{ .Pts }} golds</p>
                 <p>You have {{ .R.Food }} apples</p>
             </div>

@@ -24,7 +24,7 @@ func (E *Engine) Save(filePath string) {
 
 		for i := 1; i < len(E.Users); i++ {
 			for j := 1; j < len(E.Users); j++ {
-				if E.Users[i].Pts > E.Users[j].Pts {
+				if E.Users[i].R.Age > E.Users[j].R.Age {
 					E.Users[i].Name, E.Users[j].Name = E.Users[j].Name, E.Users[i].Name
 					E.Users[i].Pwd, E.Users[j].Pwd = E.Users[j].Pwd, E.Users[i].Pwd
 					E.Users[i].Pts, E.Users[j].Pts = E.Users[j].Pts, E.Users[i].Pts
@@ -33,6 +33,17 @@ func (E *Engine) Save(filePath string) {
 					E.Users[i].Timer, E.Users[j].Timer = E.Users[j].Timer, E.Users[i].Timer
 					E.Users[i].G, E.Users[j].G = E.Users[j].G, E.Users[i].G
 					E.Users[i].Login, E.Users[j].Login = E.Users[j].Login, E.Users[i].Login
+				} else if E.Users[i].R.Age == E.Users[j].R.Age {
+					if E.Users[i].Pts > E.Users[j].Pts {
+						E.Users[i].Name, E.Users[j].Name = E.Users[j].Name, E.Users[i].Name
+						E.Users[i].Pwd, E.Users[j].Pwd = E.Users[j].Pwd, E.Users[i].Pwd
+						E.Users[i].Pts, E.Users[j].Pts = E.Users[j].Pts, E.Users[i].Pts
+						E.Users[i].R, E.Users[j].R = E.Users[j].R, E.Users[i].R
+						E.Users[i].CurrentPage, E.Users[j].CurrentPage = E.Users[j].CurrentPage, E.Users[i].CurrentPage
+						E.Users[i].Timer, E.Users[j].Timer = E.Users[j].Timer, E.Users[i].Timer
+						E.Users[i].G, E.Users[j].G = E.Users[j].G, E.Users[i].G
+						E.Users[i].Login, E.Users[j].Login = E.Users[j].Login, E.Users[i].Login
+					}
 				}
 			}
 		}

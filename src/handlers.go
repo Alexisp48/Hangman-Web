@@ -9,6 +9,21 @@ import (
 	"time"
 )
 
+func (E *Engine) useFood(w http.ResponseWriter) {
+	if time.Since(E.P.Timer).Seconds() >= 20 && E.P.CurrentPage == "home" {
+		E.P.Timer = time.Now()
+		E.P.R.Food -= 12
+		if E.P.R.Food <= 0 {
+			if E.P.R.Age != 1 {
+				E.P.R.Age -= 1
+				E.P.R.Food = 30
+			} else {
+				E.P.R.Food = 0
+			}
+		}
+	}
+	go E.useFood(w)
+}
 
 func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 
@@ -85,22 +100,6 @@ func (P *Player) reset() {
 	P.G.LetterColor = []string{"none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"}
 }
 
-func (E *Engine) useFood(w http.ResponseWriter) {
-	if time.Since(E.P.Timer).Seconds() >= 30 {
-		E.P.Timer = time.Now()
-		E.P.R.Food -= 6
-		if E.P.R.Food <= 0 {
-			if E.P.R.Age != 1 {
-				E.P.R.Age -= 1
-				E.P.R.Food = 30
-			} else {
-				E.P.R.Food = 0
-			}
-		}
-	}
-	go E.useFood(w)
-}
-
 func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 	E.P.CurrentPage = "hangman"
 	if !E.P.Login {
@@ -171,6 +170,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 			}
 			if E.P.G.TryNumber <= 0 {
 				E.P.G.Win = "lose"
+				E.P.Pts -= 4
 				if E.P.Pts < 0 {
 					E.P.Pts = 0
 				}

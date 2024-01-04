@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="serv/css/style.css" type="text/css">
 </head>
 <body>
-    <audio autoplay="true" src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg"></audio>
+    <audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>
     {{ if or ( or (eq .G.TryNumber 10) (eq .G.TryNumber 9) ) (eq .G.TryNumber 8) }}
     <style>
         body {
@@ -77,6 +77,11 @@
             </div>
         {{ end }}
         {{ if eq .G.Win "lose" }}
+            <style>
+                body {
+                    background-color: #fc5d40;
+                }
+            </style>
             <div class="column">
                 <p> T'es super nul le mot c'était : {{ .G.Word }}</p>
                 <form action="/">
@@ -85,6 +90,11 @@
             </div>
         {{ end }}
         {{ if eq .G.Win "win" }}
+            <style>
+                body {
+                    background-color: rgb(93, 247, 156 );
+                }
+            </style>
             <div class="column">
                 <p> Bien joué t'as gagné le mot c'était : {{ .G.Word }}</p>
                 <form action="/">
