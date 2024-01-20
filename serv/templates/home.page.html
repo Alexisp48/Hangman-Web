@@ -13,7 +13,6 @@
     <h1>The 8th Era</h1>
     <div class="column">
         {{ if .Login }}
-            <audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>
             <style>
                 body {
                     background-image: url("serv/assets/images/background/background-{{ .R.Age }}.jpg");
@@ -25,13 +24,13 @@
             </form>
             <div class="column white">
                 <p> Village : </p>
-                {{ if eq .Id 1 }}
+                {{ if eq .Position 1 }}
                     <p>You are 1 st !</p>
                 {{ else }}
-                    <p>You are {{ .Id }} th !</p>
+                    <p>You are {{ .Position }} th !</p>
                 {{ end }}
                 <p>You are at the era {{ .R.Age }}</p>
-                <p>You have {{ .Pts }} golds</p>
+                <p>You have {{ .Gold }} golds</p>
                 <p>You have {{ .R.Food }} apples</p>
             </div>
             {{ if eq .R.Age 8 }}

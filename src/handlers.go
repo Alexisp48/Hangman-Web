@@ -43,10 +43,10 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 			if E.Users[i].Name == name && E.Users[i].Pwd == pwd {
 				E.P.Name = E.Users[i].Name
 				E.P.Pwd = E.Users[i].Pwd
-				E.P.Pts = E.Users[i].Pts
+				E.P.Gold = E.Users[i].Gold
 				E.P.G = &Game{TryNumber: 10, Win: "inGame"}
 				E.P.R = E.Users[i].R
-				E.P.Id = E.Users[i].Id
+				E.P.Position = E.Users[i].Position
 				E.P.R.AgePrice = []int{0, 20, 47, 68, 95, 112, 130, 143, 155}
 				UserExist = true
 			}
@@ -55,11 +55,11 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 		if !UserExist {
 			E.P.Name = name
 			E.P.Pwd = pwd
-			E.P.Pts = 0
+			E.P.Gold = 0
 			E.P.G = &Game{TryNumber: 10, Win: "inGame"}
 			E.P.R = &Resource{Food: 0, Age: 1}
 			E.P.R.AgePrice = []int{0, 20, 47, 68, 95, 112, 130, 143, 155}
-			E.P.Id = len(E.Users)
+			E.P.Position = len(E.Users)
 			E.Users = append(E.Users, E.P)
 		}
 
@@ -71,11 +71,11 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 
 		go E.useFood(w)
 
-	} else if E.P.Login && upgrade != "" && E.P.Pts >= E.P.R.AgePrice[E.P.R.Age] {
-		E.P.Pts -= E.P.R.AgePrice[E.P.R.Age]
+	} else if E.P.Login && upgrade != "" && E.P.Gold >= E.P.R.AgePrice[E.P.R.Age] {
+		E.P.Gold -= E.P.R.AgePrice[E.P.R.Age]
 		E.P.R.Age += 1
-	} else if E.P.Login && food != "" && E.P.Pts >= 25 {
-		E.P.Pts -= 25
+	} else if E.P.Login && food != "" && E.P.Gold >= 25 {
+		E.P.Gold -= 25
 		E.P.R.Food += 30
 	}
 
@@ -156,23 +156,23 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				}
 			} else if letter == E.P.G.Word { // test un mot et c'est le bon
 				E.P.G.Win = "win" // win
-				E.P.Pts += 13
+				E.P.Gold += 13
 				E.P.R.Food += 5
 				E.Save("data/Users.json")
-			} else { // test pas bon lettre ou mot
+			} else { // test pas bonNE lettre ou mot
 				E.P.G.TryNumber--
 			}
 			if E.P.G.WordFind == E.P.G.Word {
 				E.P.G.Win = "win"
-				E.P.Pts += 13
+				E.P.Gold += 13
 				E.P.R.Food += 5
 				E.Save("data/Users.json")
 			}
 			if E.P.G.TryNumber <= 0 {
 				E.P.G.Win = "lose"
-				E.P.Pts -= 4
-				if E.P.Pts < 0 {
-					E.P.Pts = 0
+				E.P.Gold -= 4
+				if E.P.Gold < 0 {
+					E.P.Gold = 0
 				}
 				E.Save("data/Users.json")
 			}

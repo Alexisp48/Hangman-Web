@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="serv/css/style.css" type="text/css">
 </head>
 <body>
-    <audio autoplay loop hidden src="serv/assets/sounds/Background_music.mp3"></audio>
     {{ if or ( or (eq .G.TryNumber 10) (eq .G.TryNumber 9) ) (eq .G.TryNumber 8) }}
     <style>
         body {
@@ -70,7 +69,6 @@
                 <p>{{ .G.WordFind }}</p>
                 <p>{{ .G.LetterTested }}</p>
                 <p>{{ .G.TryNumber }} Try Left</p>
-                <p>Mot à trouver : {{ .G.Word }}</p>
             </div>
             <div class="flex">
                 <img src="serv/assets/images/hangman/hangman-{{ .G.TryNumber }}.png" alt=""\>
