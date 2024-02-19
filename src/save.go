@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func (E *Engine) Load(filePath string) {
+func (E *Engine) Load(filePath string) { // récupère les données de l'utilisateur
 
 	data, _ := ioutil.ReadFile(filePath)
 	err := json.Unmarshal(data, &E.Users)
@@ -17,7 +17,7 @@ func (E *Engine) Load(filePath string) {
 
 }
 
-func (E *Engine) Save(filePath string) {
+func (E *Engine) Save(filePath string) { // sauvegarde et acctualise le classement global
 
 	if E.P.Login {
 		E.Users[E.P.Position] = E.P // Update values //

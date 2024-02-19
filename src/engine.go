@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type Player struct {
+type Player struct { // données du joueur
 	Name        string    `json:"name"`
 	Pwd         string    `json:"pwd"`
 	Gold        int       `json:"pts"`
@@ -19,13 +19,13 @@ type Player struct {
 	Login       bool
 }
 
-type Resource struct {
+type Resource struct {// données des resources du joueur
 	Food     int
 	Age      int // Avancement de la civilisation
 	AgePrice []int
 }
 
-type Game struct {
+type Game struct { // données du jeu
 	Word         string
 	WordFind     string
 	LetterTested string
@@ -34,13 +34,13 @@ type Game struct {
 	TryNumber    int
 }
 
-type Engine struct {
+type Engine struct { // données du site en général
 	P     Player
 	Users []Player
 	Port  string
 }
 
-func (E *Engine) Init() {
+func (E *Engine) Init() {  // initialise les données
 	rand.Seed(time.Now().UnixNano())
 
 	E.Load("data/Users.json")
@@ -53,7 +53,7 @@ func (E *Engine) Init() {
 	E.Port = ":8080"
 }
 
-func (E *Engine) Run() {
+func (E *Engine) Run() { // lancement du site
 
 	E.Init()
 
@@ -65,5 +65,5 @@ func (E *Engine) Run() {
 
 	fmt.Println("(http://localhost:8080) - Serveur started on port", E.Port)
 
-	http.ListenAndServe(E.Port, nil)
+	http.ListenAndServe(E.Port, nil) // créer le serveur local au bon port
 }

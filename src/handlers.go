@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (E *Engine) useFood(w http.ResponseWriter) {
+func (E *Engine) useFood(w http.ResponseWriter) { // utilise 12 de nourriture tout les 20 secondes
 	if time.Since(E.P.Timer).Seconds() >= 20 && E.P.CurrentPage == "home" {
 		E.P.Timer = time.Now()
 		E.P.R.Food -= 12
@@ -25,7 +25,7 @@ func (E *Engine) useFood(w http.ResponseWriter) {
 	go E.useFood(w)
 }
 
-func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
+func (E *Engine) Home(w http.ResponseWriter, r *http.Request) { // page principale
 
 	E.P.CurrentPage = "home"
 
@@ -39,7 +39,7 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 		E.P.Timer = time.Now()
 
 		UserExist := false
-		for i := 0; i < len(E.Users); i++ {
+		for i := 0; i < len(E.Users); i++ { // login
 			if E.Users[i].Name == name && E.Users[i].Pwd == pwd {
 				E.P.Name = E.Users[i].Name
 				E.P.Pwd = E.Users[i].Pwd
@@ -52,7 +52,7 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		if !UserExist {
+		if !UserExist { // créer un nouvel utilisateur
 			E.P.Name = name
 			E.P.Pwd = pwd
 			E.P.Gold = 0
@@ -79,19 +79,19 @@ func (E *Engine) Home(w http.ResponseWriter, r *http.Request) {
 		E.P.R.Food += 30
 	}
 
-	E.Save("data/Users.json")
+	E.Save("data/Users.json") // sauvegarde
 
-	E.P.renderTemplates(w, "home")
+	E.P.renderTemplates(w, "home") // actualise la page
 
 }
 
-func replaceAtIndex(in *string, r rune, i int) {
+func replaceAtIndex(in *string, r rune, i int) { // fonction utile
 	out := []rune(*in)
 	out[i] = rune(r)
 	*in = string(out)
 }
 
-func (P *Player) reset() {
+func (P *Player) reset() { // remet toutes les valeurs de base à la fin d'une partie
 	P.G.LetterTested = ""
 	P.G.Word = ""
 	P.G.TryNumber = 10
@@ -100,7 +100,7 @@ func (P *Player) reset() {
 	P.G.LetterColor = []string{"none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"}
 }
 
-func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
+func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) { // page hangman
 	E.P.CurrentPage = "hangman"
 	if !E.P.Login {
 		fmt.Fprintf(w, "Your are not login")
@@ -112,7 +112,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 	if E.P.G.Win != "inGame" {
 		E.P.reset()
 	}
-	if len(E.P.G.Word) == 0 { // initialse le mot
+	if len(E.P.G.Word) == 0 { // initialse le mot à deviner
 		E.P.G.Word = openFile("wordDataBase.txt")[rand.Intn(len(openFile("wordDataBase.txt")))]
 		for i := 0; i < len(E.P.G.Word); i++ {
 			E.P.G.WordFind += "_"
@@ -134,7 +134,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				} else {
 					turn = false
 				}
-				for i := 0; i < len(E.P.G.LetterTested)/3; i++ {
+				for i := 0; i < len(E.P.G.LetterTested)/3; i++ { // ajoute la lettre tester dans la liste de lettre testé
 					if []rune(letter)[0] == rune(E.P.G.LetterTested[i*3]) {
 						turn = false
 					}
@@ -158,8 +158,8 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				E.P.G.Win = "win" // win
 				E.P.Gold += 13
 				E.P.R.Food += 5
-				E.Save("data/Users.json")
-			} else { // test pas bonNE lettre ou mot
+				E.Save("data/Users.json") // save
+			} else { // test pas bonne lettre ou mot
 				E.P.G.TryNumber--
 			}
 			if E.P.G.WordFind == E.P.G.Word {
@@ -168,7 +168,7 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				E.P.R.Food += 5
 				E.Save("data/Users.json")
 			}
-			if E.P.G.TryNumber <= 0 {
+			if E.P.G.TryNumber <= 0 { // trop de tentatives c'est perdu
 				E.P.G.Win = "lose"
 				E.P.Gold -= 4
 				if E.P.Gold < 0 {
@@ -176,12 +176,12 @@ func (E *Engine) Hangman(w http.ResponseWriter, r *http.Request) {
 				}
 				E.Save("data/Users.json")
 			}
-			E.P.renderTemplates(w, "hangman")
+			E.P.renderTemplates(w, "hangman") // actuallise la page
 		}
 	}
 }
 
-func (P *Player) renderTemplates(w http.ResponseWriter, tmpl string) {
+func (P *Player) renderTemplates(w http.ResponseWriter, tmpl string) { // affiche la page passer en paramètre
 	t, err := template.ParseFiles("./serv/templates/" + tmpl + ".page.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
